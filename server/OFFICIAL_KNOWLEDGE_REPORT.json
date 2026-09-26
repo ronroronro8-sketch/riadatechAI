@@ -1,0 +1,548 @@
+{
+  "startedAt": "2026-09-26T12:59:26.106Z",
+  "successes": [
+    {
+      "url": "https://gov.om/w/create-new-commercial-register-for-limited-liability-company",
+      "title": "اطلب إنشاء سجل تجاري جديد لشركة محدودة المسؤولية",
+      "status": "unchanged",
+      "version": 1,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/apply-for-commercial-registration-for-one-person-company",
+      "title": "اطلب إنشاء سجل تجاري لشركة الشخص الواحد",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/renew-commercial-register",
+      "title": "جدّد السجل التجاري",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/update-commercial-registration-data",
+      "title": "حدث بيانات السجل التجاري",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/create-commercial-register-for-home-business",
+      "title": "أنشئ سجلًّا تجاريًّا للأعمال المنزلية",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/get-investment-license",
+      "title": "احصل على ترخيص استثماري",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/get-a-license-to-practice-an-activity",
+      "title": "احصل على ترخيص مزاولة نشاط",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/get-entrepreneurship-card",
+      "title": "احصل على بطاقة ريادة الأعمال",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/register-for-income-tax-",
+      "title": "سجِّل في ضريبة الدخل",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/register-for-vat%09-1",
+      "title": "سجل في ضريبة القيمة المضافة",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 6
+    },
+    {
+      "url": "https://tms.taxoman.gov.om/portal/income-tax-faqs",
+      "title": "الأسئلة الشائعة حول ضريبة الدخل",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 16
+    },
+    {
+      "url": "https://tms.taxoman.gov.om/portal/vat-faqs",
+      "title": "الأسئلة الشائعة حول ضريبة القيمة المضافة",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 11
+    },
+    {
+      "url": "https://www.sme.gov.om/servicedetails/?ID=0",
+      "title": "خدمات بطاقة ريادة الأعمال",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 2
+    },
+    {
+      "url": "https://www.sme.gov.om/servicedetails/?ID=4",
+      "title": "خدمات برنامج التوجيه",
+      "status": "unchanged",
+      "version": 2,
+      "chunks": 1
+    },
+    {
+      "url": "https://www.tejarah.gov.om/ar/invest",
+      "title": "عالم الفرص في سلطنة عُمان",
+      "status": "created",
+      "version": 1,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/create-commercial-register-for-individual-trader",
+      "title": "اطلب إنشاء سجل تجاري لتاجر فرد",
+      "status": "created",
+      "version": 1,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/create-new-commercial-register-for-general-partnership",
+      "title": "اطلب إنشاء سجل تجاري جديد شركة تضامنية",
+      "status": "created",
+      "version": 1,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/get-commercial-registration-for-street-vendors",
+      "title": "اطلب إنشاء سجل تجاري للباعة المتجولين",
+      "status": "created",
+      "version": 1,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/request-for-the-transfer-of-commercial-register-ownership",
+      "title": "انقل ملكية سجل تجاري",
+      "status": "created",
+      "version": 1,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/modify-commercial-register-data",
+      "title": "عدِّل بيانات السجل التجاري",
+      "status": "created",
+      "version": 1,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/register-commercial-representation-office",
+      "title": "سجِّل مكتب تمثيل تجاري",
+      "status": "created",
+      "version": 1,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/get-a-license-to-practice-e-commerce-commercial-companies-",
+      "title": "احصل على ترخيص لمزاولة التجارة الإلكترونية (الشركات التجارية)",
+      "status": "created",
+      "version": 1,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/get-a-license-to-practice-e-commerce-freelancers-",
+      "title": "احصل على ترخيص لمزاولة التجارة الإلكترونية (العمل الحر)",
+      "status": "created",
+      "version": 1,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/get-municipal-license-for-vehicles-6",
+      "title": "احصل على ترخيص بلدي للمركبات بمحافظة جنوب الباطنة",
+      "status": "created",
+      "version": 1,
+      "chunks": 5
+    },
+    {
+      "url": "https://gov.om/w/get-advertising-license-6",
+      "title": "احصل على ترخيص الإعلان بمحافظة جنوب الباطنة",
+      "status": "created",
+      "version": 1,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/get-license-for-printed-materials-and-publications",
+      "title": "احصل على ترخيص للمطبوعات والمنشورات الورقية",
+      "status": "created",
+      "version": 1,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/renew-entrepreneurship-card-2",
+      "title": "جدّد بطاقة ريادة الأعمال",
+      "status": "created",
+      "version": 1,
+      "chunks": 6
+    },
+    {
+      "url": "https://gov.om/w/get-the-startup-entrepreneurship-card-1",
+      "title": "احصل على بطاقة ريادة الأعمال للشركات الناشئة",
+      "status": "created",
+      "version": 1,
+      "chunks": 6
+    },
+    {
+      "url": "https://tms.taxoman.gov.om/portal/registration",
+      "title": "التسجيل",
+      "status": "created",
+      "version": 1,
+      "chunks": 2
+    },
+    {
+      "url": "https://www.sme.gov.om/servicedetails/?ID=1",
+      "title": "خدمات مراكز ريادة الأعمال",
+      "status": "created",
+      "version": 1,
+      "chunks": 2
+    },
+    {
+      "url": "https://www.sme.gov.om/servicedetails/?ID=2",
+      "title": "خدمـة تدريب",
+      "status": "created",
+      "version": 1,
+      "chunks": 1
+    },
+    {
+      "url": "https://www.sme.gov.om/servicedetails/?ID=3",
+      "title": "خدمات استشارية عامة و تخصصية",
+      "status": "created",
+      "version": 1,
+      "chunks": 1
+    },
+    {
+      "url": "https://www.sme.gov.om/servicedetails/?ID=5",
+      "title": "الدعم الحرفيين",
+      "status": "created",
+      "version": 1,
+      "chunks": 2
+    },
+    {
+      "url": "https://www.sme.gov.om/servicedetails/?ID=6",
+      "title": "خدمة الامتياز التجاري",
+      "status": "created",
+      "version": 1,
+      "chunks": 2
+    },
+    {
+      "url": "https://www.sme.gov.om/servicedetails/?ID=7",
+      "title": "خدمات التسويق وترويج المنتجات",
+      "status": "created",
+      "version": 1,
+      "chunks": 1
+    }
+  ],
+  "failures": [],
+  "documentsBefore": 14,
+  "chunksBefore": 87,
+  "storedChunksBefore": 179,
+  "storedChunksAfter": 267,
+  "documents": 35,
+  "chunks": 175,
+  "domains": [
+    "gov.om",
+    "tms.taxoman.gov.om",
+    "www.sme.gov.om",
+    "www.tejarah.gov.om"
+  ],
+  "probes": [
+    {
+      "question": "كيف أطلع تصريح لمشروعي في عمان؟",
+      "status": "retrieved_evidence",
+      "sources": [
+        {
+          "title": "عالم الفرص في سلطنة عُمان",
+          "url": "https://www.tejarah.gov.om/ar/invest",
+          "authority": "وزارة التجارة والصناعة وترويج الاستثمار",
+          "domain": "www.tejarah.gov.om",
+          "updatedAt": null,
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:37.753Z",
+          "id": "K1"
+        },
+        {
+          "title": "اطلب إنشاء سجل تجاري لشركة الشخص الواحد",
+          "url": "https://gov.om/w/apply-for-commercial-registration-for-one-person-company",
+          "authority": "وزارة التجارة والصناعة وترويج الإستثمار",
+          "domain": "gov.om",
+          "updatedAt": "2026-07-02",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:27.592Z",
+          "id": "K2"
+        },
+        {
+          "title": "اطلب إنشاء سجل تجاري جديد شركة تضامنية",
+          "url": "https://gov.om/w/create-new-commercial-register-for-general-partnership",
+          "authority": "وزارة التجارة والصناعة وترويج الإستثمار",
+          "domain": "gov.om",
+          "updatedAt": "2026-07-02",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:39.495Z",
+          "id": "K3"
+        },
+        {
+          "title": "اطلب إنشاء سجل تجاري جديد لشركة محدودة المسؤولية",
+          "url": "https://gov.om/w/create-new-commercial-register-for-limited-liability-company",
+          "authority": "وزارة التجارة والصناعة وترويج الإستثمار",
+          "domain": "gov.om",
+          "updatedAt": "2026-07-02",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:26.586Z",
+          "id": "K4"
+        },
+        {
+          "title": "اطلب إنشاء سجل تجاري لتاجر فرد",
+          "url": "https://gov.om/w/create-commercial-register-for-individual-trader",
+          "authority": "وزارة التجارة والصناعة وترويج الإستثمار",
+          "domain": "gov.om",
+          "updatedAt": "2026-07-02",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:38.634Z",
+          "id": "K5"
+        }
+      ],
+      "headings": [
+        "تسجيل الشركة",
+        "خطوات طلب الخدمة",
+        "خطوات طلب الخدمة",
+        "خطوات طلب الخدمة",
+        "خطوات طلب الخدمة"
+      ]
+    },
+    {
+      "question": "بكم أقدر أسوي تصريح لمشروعي؟",
+      "status": "retrieved_evidence",
+      "sources": [
+        {
+          "title": "عالم الفرص في سلطنة عُمان",
+          "url": "https://www.tejarah.gov.om/ar/invest",
+          "authority": "وزارة التجارة والصناعة وترويج الاستثمار",
+          "domain": "www.tejarah.gov.om",
+          "updatedAt": null,
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:37.753Z",
+          "id": "K1"
+        },
+        {
+          "title": "اطلب إنشاء سجل تجاري لشركة الشخص الواحد",
+          "url": "https://gov.om/w/apply-for-commercial-registration-for-one-person-company",
+          "authority": "وزارة التجارة والصناعة وترويج الإستثمار",
+          "domain": "gov.om",
+          "updatedAt": "2026-07-02",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:27.592Z",
+          "id": "K2"
+        },
+        {
+          "title": "اطلب إنشاء سجل تجاري جديد شركة تضامنية",
+          "url": "https://gov.om/w/create-new-commercial-register-for-general-partnership",
+          "authority": "وزارة التجارة والصناعة وترويج الإستثمار",
+          "domain": "gov.om",
+          "updatedAt": "2026-07-02",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:39.495Z",
+          "id": "K3"
+        },
+        {
+          "title": "اطلب إنشاء سجل تجاري جديد لشركة محدودة المسؤولية",
+          "url": "https://gov.om/w/create-new-commercial-register-for-limited-liability-company",
+          "authority": "وزارة التجارة والصناعة وترويج الإستثمار",
+          "domain": "gov.om",
+          "updatedAt": "2026-07-02",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:26.586Z",
+          "id": "K4"
+        }
+      ],
+      "headings": [
+        "تسجيل الشركة",
+        "رسوم الخدمة",
+        "خطوات طلب الخدمة",
+        "خطوات طلب الخدمة",
+        "خطوات طلب الخدمة"
+      ]
+    },
+    {
+      "question": "كيف أسجل للضريبة؟",
+      "status": "retrieved_evidence",
+      "sources": [
+        {
+          "title": "سجِّل في ضريبة الدخل",
+          "url": "https://gov.om/w/register-for-income-tax-",
+          "authority": "جهاز الضرائب",
+          "domain": "gov.om",
+          "updatedAt": "2025-03-28",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:33.647Z",
+          "id": "K1"
+        },
+        {
+          "title": "التسجيل",
+          "url": "https://tms.taxoman.gov.om/portal/registration",
+          "authority": "جهاز الضرائب",
+          "domain": "tms.taxoman.gov.om",
+          "updatedAt": null,
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:49.921Z",
+          "id": "K2"
+        }
+      ],
+      "headings": [
+        "سجِّل في ضريبة الدخل",
+        "شروط الخدمة",
+        "خطوات طلب الخدمة",
+        "التسجيل",
+        "التسجيل"
+      ]
+    },
+    {
+      "question": "ما هي بطاقة ريادة؟",
+      "status": "retrieved_evidence",
+      "sources": [
+        {
+          "title": "احصل على بطاقة ريادة الأعمال",
+          "url": "https://gov.om/w/get-entrepreneurship-card",
+          "authority": "هيئة تنمية المؤسسات الصغيرة والمتوسطة",
+          "domain": "gov.om",
+          "updatedAt": "2025-08-24",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:32.881Z",
+          "id": "K1"
+        },
+        {
+          "title": "خدمات بطاقة ريادة الأعمال",
+          "url": "https://www.sme.gov.om/servicedetails/?ID=0",
+          "authority": "هيئة تنمية المؤسسات الصغيرة والمتوسطة",
+          "domain": "www.sme.gov.om",
+          "updatedAt": null,
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:36.434Z",
+          "id": "K2"
+        }
+      ],
+      "headings": [
+        "احصل على بطاقة ريادة الأعمال",
+        "خدمات بطاقة ريادة الأعمال",
+        "خدمات بطاقة ريادة الأعمال",
+        "شروط الخدمة",
+        "رسوم الخدمة"
+      ]
+    }
+  ],
+  "verification": "Live Mongo retrieval after query expansion and ranking adjustments",
+  "liveAnswerChecks": [
+    {
+      "question": "كيف أطلع تصريح لمشروعي في عمان؟",
+      "status": 200,
+      "completed": true,
+      "answer": "للبدء في استخراج تصريح أو سجل تجاري لمشروعك في سلطنة عمان، تتم الإجراءات عبر منصة عُمان للأعمال التابعة لوزارة التجارة والصناعة وترويج الاستثمار [K1]. تشمل الخطوات العامة تقديم الطلب إلكترونياً، اختيار الشكل القانوني المناسب للشركة (مثل شركة محدودة المسؤولية، أو شركة الشخص الواحد، أو تاجر فرد)، تعبئة بيانات السجل التجاري، توقيع المستندات إلكترونياً، دفع الرسوم المقررة، والحصول على شهادة العضوية من غرفة تجارة وصناعة عمان [K1, K2, K3, K4].\n\nما هو النشاط التجاري المحدد الذي ترغب في ممارسته من خلال مشروعك؟",
+      "sources": [
+        {
+          "title": "عالم الفرص في سلطنة عُمان",
+          "url": "https://www.tejarah.gov.om/ar/invest",
+          "authority": "وزارة التجارة والصناعة وترويج الاستثمار",
+          "domain": "www.tejarah.gov.om",
+          "updatedAt": null,
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:37.753Z",
+          "id": "K1"
+        }
+      ]
+    },
+    {
+      "question": "بكم أقدر أسوي تصريح لمشروعي؟",
+      "status": 200,
+      "completed": true,
+      "answer": "لتأسيس وتسجيل مشروع تجاري في سلطنة عمان، تتم الإجراءات إلكترونياً عبر منصة عُمان للأعمال التابعة لوزارة التجارة والصناعة وترويج الاستثمار [K1]. \n\nتشمل الخطوات العامة لتسجيل الشركة الدخول إلى المنصة، اختيار الشكل القانوني المناسب للمشروع، تعبئة بيانات السجل التجاري، توقيع المستندات إلكترونياً، دفع الرسوم المقررة، والحصول على شهادة العضوية من غرفة تجارة وصناعة عمان [K1]. \n\nأما بالنسبة للرسوم، فقد تم تحديد بعض الرسوم الرسمية المنشورة لخدمات محددة؛ فعلى سبيل المثال، تبلغ رسوم الحصول على سجل تجاري جديد لشركة الشخص الواحد 40 ريالاً عمانياً، بالإضافة إلى رسوم إدارية بقيمة 8 ريال عماني [K2]. \n\nنظراً لأن الرسوم تختلف باختلاف الشكل القانوني للشركة (مثل شركة شخص واحد، شركة محدودة المسؤولية، أو تاجر فرد) والأنشطة الاقتصادية المطلوبة، هل تفضل أن نبدأ بتحديد الشكل القانوني الأنسب لمشروعك لمعرفة تفاسير الرسوم الخاصة به؟",
+      "sources": [
+        {
+          "title": "عالم الفرص في سلطنة عُمان",
+          "url": "https://www.tejarah.gov.om/ar/invest",
+          "authority": "وزارة التجارة والصناعة وترويج الاستثمار",
+          "domain": "www.tejarah.gov.om",
+          "updatedAt": null,
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:37.753Z",
+          "id": "K1"
+        },
+        {
+          "title": "اطلب إنشاء سجل تجاري لشركة الشخص الواحد",
+          "url": "https://gov.om/w/apply-for-commercial-registration-for-one-person-company",
+          "authority": "وزارة التجارة والصناعة وترويج الإستثمار",
+          "domain": "gov.om",
+          "updatedAt": "2026-07-02",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:27.592Z",
+          "id": "K2"
+        }
+      ]
+    },
+    {
+      "question": "كيف أسجل للضريبة؟",
+      "status": 200,
+      "completed": true,
+      "answer": "للتسجيل في الضرائب بسلطنة عمان، يختلف الإجراء بحسب نوع الضريبة:\n\n**1. ضريبة الدخل:**\n* **الشرط الأساسي:** يجب أن يكون لمقدم الطلب سجل تجاري [K1].\n* **موعد التسجيل:** يُعد إلزاميًا لأي منشأة تمارس نشاطًا اقتصاديًا خلال مدة لا تتجاوز 60 يومًا من تاريخ بدء النشاط أو من تاريخ التسجيل في وزارة التجارة والصناعة وترويج الاستثمار [K2].\n* **آلية التسجيل:** يتم تقديم الطلب ودراسته والموافقة عليه إلكترونيًا عبر البوابة الإلكترونية لجهاز الضرائب [K1, K2] (حيث يُمنح الخاضع للضريبة رقم ملف ضريبي خاص به [K2])، وذلك وفقًا للإجراءات والشروط التي حددها جهاز الضرائب [K1].\n\n**2. ضريبة القيمة المضافة:**\n* **التسجيل الإلزامي:** يُلزم الشخص أو المؤسسة بالتسجيل عند بلوغ أو توقع بلوغ إيراداته السنوية من التوريدات الخاضعة للضريبة 38,500 ريال عُماني [K2].\n* **التسجيل الاختياري:** متاح لمن تبلغ إيراداته 19,250 ريالًا عمانيًا أو أكثر للاستفادة من استرداد الضريبة المدفوعة على المشتريات [K2].\n* **آلية التسجيل:** يتم عبر البوابة الإلكترونية لجهاز الضرائب للحصول على رقم تسجيل ضريبي [K2].\n\n**3. الضريبة الانتقائية:**\n* **نطاقها:** تفرض على الأشخاص أو الشركات التي تستورد أو تنتج أو تخزن أو تتعامل في سلع محددة (مثل منتجات التبغ، مشروبات الطاقة، المشروبات الغازية، المشروبات المحلاة، لحوم الخنزير، والمشروبات الكحولية) [K2].\n* **موعدها وآليتها:** يُعد التسجيل إلزاميًا قبل مزاولة أي نشاط يتعلق بهذه السلع عبر البوابة الإلكترونية لجهاز الضرائب [K2].\n\n---\n\n**للتقدم بأدق خطوات تخص منشأتك:** ما هو النشاط التجاري الذي تمارسه أو تخطط لبدء مزاولته؟",
+      "sources": [
+        {
+          "title": "سجِّل في ضريبة الدخل",
+          "url": "https://gov.om/w/register-for-income-tax-",
+          "authority": "جهاز الضرائب",
+          "domain": "gov.om",
+          "updatedAt": "2025-03-28",
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:33.647Z",
+          "id": "K1"
+        },
+        {
+          "title": "التسجيل",
+          "url": "https://tms.taxoman.gov.om/portal/registration",
+          "authority": "جهاز الضرائب",
+          "domain": "tms.taxoman.gov.om",
+          "updatedAt": null,
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:49.921Z",
+          "id": "K2"
+        }
+      ]
+    },
+    {
+      "question": "ما هي بطاقة ريادة؟",
+      "status": 200,
+      "completed": true,
+      "answer": "**بطاقة ريادة الأعمال** هي مستند رسمي يصدر عن هيئة تنمية المؤسسات الصغيرة والمتوسطة (ريادة) في سلطنة عمان، وتهدف إلى مساندة أصحاب المؤسسات الصغيرة والمتوسطة من خلال منحهم مجموعة من التسهيلات والامتيازات والحوافز المقدمة من الجهات الحكومية والخاصة [K1, K2].\n\n### أبرز الشروط الأساسية للحصول على البطاقة:\n* أن تكون المؤسسة مسجلة لدى هيئة تنمية المؤسسات الصغيرة والمتوسطة ومقرها الرئيسي داخل سلطنة عمان [K2].\n* ألا تكون المؤسسة تابعة أو فرعاً لمؤسسة كبيرة [K2].\n* أن تكون المؤسسة مملوكة بالكامل لأفراد عمانيين متفرغين لإدارة أعمالهم (وفي حال كانت شركة، يُشترط تفرغ شخص واحد على الأقل) [K2].\n* أن يكون المالك المتفرغ مسجلاً في صندوق الحماية الاجتماعية كصاحب عمل، مع استثناء المتقاعدين أو من تتجاوز أعمارهم (60) عاماً، أو المستفيدين من ضوابط تفرغ موظفي الحكومة (وفق القرار الخاص بذلك) [K2].\n* ألا يكون قد سبق للمؤسسة أو لمالكها الحصول على بطاقة ريادة أعمال خلال السنتين الأخيرتين [K2].\n\n### رسوم الخدمة والمدة:\n* **الرسوم:** 5 ريالات عمانية لمدة 12 شهراً (للإصدار والتجديد) [K2].\n* **الفترة الزمنية للإنجاز:** يوم عمل واحد [K2].\n\n*لتقديم الطلب أو لإصدار البطعة، يتم ذلك عبر الموقع الإلكتروني لهيئة تنمية المؤسسات الصغيرة والمتوسطة [K2].*",
+      "sources": [
+        {
+          "title": "خدمات بطاقة ريادة الأعمال",
+          "url": "https://www.sme.gov.om/servicedetails/?ID=0",
+          "authority": "هيئة تنمية المؤسسات الصغيرة والمتوسطة",
+          "domain": "www.sme.gov.om",
+          "updatedAt": null,
+          "publishedAt": null,
+          "retrievedAt": "2026-09-26T12:59:36.434Z",
+          "id": "K2"
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "focusedTestsPassed": 9,
+    "liveRetrievalQuestionsPassed": 4,
+    "liveApiAnswersCompleted": 4,
+    "systemPromptHashUnchanged": true
+  }
+}

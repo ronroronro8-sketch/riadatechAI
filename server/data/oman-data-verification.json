@@ -1,0 +1,17 @@
+{
+  "activeRecords": 64945,
+  "allStoredRecords": 64945,
+  "originalFilesUnchanged": true,
+  "queryStatus": "available",
+  "queryGroups": 1,
+  "queryRows": 48,
+  "queryMetrics": [
+    {
+      "label": "العدد",
+      "value": 4270,
+      "knownPartialSum": 4270,
+      "missingOrNonNumeric": 0
+    }
+  ],
+  "contextBytes": 2713
+}
