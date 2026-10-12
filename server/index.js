@@ -1,3 +1,4 @@
+import { analyzeDuqm, isDuqm } from './services/duqmAnalysis.js';
 import FeasibilityStudy from './Models/FeasibilityStudy.js';
 import { createFeasibilityService } from './services/feasibility/service.js';
 import { isFeasibilityIntent } from './services/feasibility/inputs.js';
@@ -17,6 +18,7 @@ import dns from "node:dns";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { mountProductionFrontend, validateProductionEnvironment } from "./config/deployment.js";
 
 import { createAuthRouter } from "./routes/auth.js";
 import cors from "cors";
@@ -100,6 +102,7 @@ const GEMINI_KEY_MISSING_ERROR = "GEMINI_API_KEY is not configured on the server
 const allowedCorsOrigins = new Set(
   [
     ...(process.env.NODE_ENV === "production" ? [] : ["http://localhost:3000", "http://127.0.0.1:3000"]),
+    process.env.RENDER_EXTERNAL_URL,
     ...(process.env.CLIENT_URL || "")
       .split(",")
       .map((url) => url.trim().replace(/\/+$/, "")),
@@ -900,6 +903,11 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+app.get("/api/ready", (req, res) => {
+  const ready = mongoose.connection.readyState === 1;
+  res.status(ready ? 200 : 503).json({ ok: ready, databaseReady: ready });
+});
+
 async function smartAssistantHandler(req, res) {
   if (isFeasibilityIntent(String(req.body?.message || ""))) {
     return res.status(400).json({ error: "Feasibility studies require an authenticated saved conversation at /api/smart-assistant." });
@@ -990,7 +998,13 @@ app.get("/api/location-service/lookup", async (req, res) => {
   }
 });
 
+app.get('/api/city-analysis', async (req, res) => {
+  if (!isDuqm(req.query.city)) return res.status(400).json({error: 'This detailed city analysis currently supports Duqm.'});
+  try { res.json(await analyzeDuqm(req.query)); }
+  catch (error) { res.status(error.status || 503).json({error: error.status ? error.message : 'Duqm analysis data is unavailable.'}); }
+});
 async function loadMapRecommendations(query) {
+  if (isDuqm(query.city)) return analyzeDuqm(query);
   const city = String(query.city || "").trim();
   const businessType = String(query.businessType || "Coffee Shop").trim() || "Coffee Shop";
   const mapping = getBusinessCategoryMapping(businessType);
@@ -1075,6 +1089,7 @@ app.get("/api/location-recommendations", async (req, res) => {
 });
 
 async function loadMapCompetitors(query) {
+  if (isDuqm(query.city)) { const r = await analyzeDuqm(query); return { ...r, count: r.competitor_count, data_quality: r.data_mode, message_en: r.notice_en, message_ar: r.notice_ar }; }
   const city = String(query.city || "Sohar").trim() || "Sohar";
   const businessType = String(query.businessType || "Coffee Shop").trim() || "Coffee Shop";
   const mapping = getBusinessCategoryMapping(businessType);
@@ -1151,6 +1166,7 @@ app.get("/api/location-competitors", async (req, res) => {
 });
 
 async function loadMapAlternatives(query) {
+  if (isDuqm(query.city)) { const r = await analyzeDuqm(query); return { alternatives: r.recommendations.slice(1), data_quality: r.data_mode, message_en: r.notice_en, message_ar: r.notice_ar }; }
   const city = String(query.city || "Sohar").trim() || "Sohar";
   const businessType = String(query.businessType || "Coffee Shop").trim() || "Coffee Shop";
   const mapping = getBusinessCategoryMapping(businessType);
@@ -1249,6 +1265,7 @@ app.get("/api/data-sources", async (req, res) => {
 });
 
 async function loadMapRentals(query) {
+  if (isDuqm(query.city)) { const r = await analyzeDuqm(query); return { suggestions: [], maxMonthlyRent: Number(query.maxMonthlyRent || 0), data_source: 'DEMO', warning_en: r.notice_en, warning_ar: r.notice_ar }; }
   const city = String(query.city || "Sohar").trim() || "Sohar";
   const businessType = String(query.businessType || "Coffee Shop").trim() || "Coffee Shop";
   const maxMonthlyRent = toFiniteNumber(query.maxMonthlyRent);
@@ -1286,7 +1303,16 @@ app.get("/api/rental-budget-suggestions", async (req, res) => {
 
 app.use("/api/map-analysis", createMapAnalysisRouter(smartMapService));
 
+if (process.env.NODE_ENV === "production") {
+  mountProductionFrontend(app, path.join(__dirname, "../client/build"));
+}
+
 async function startServer() {
+  validateProductionEnvironment();
+  // Cached map analysis is available even while MongoDB is connecting.
+  app.listen(PORT, () => {
+    console.log(`RiadaTech API is listening on port ${PORT}`);
+  });
   console.log(
     "MongoDB target:",
     hasMongoUri ? redactMongoCredentials(mongoUri) : "missing"
@@ -1325,9 +1351,7 @@ async function startServer() {
     }
   }
 
-  app.listen(PORT, () => {
-    console.log(`RiadaTech API is listening on port ${PORT}`);
-  });
+
 }
 
 // Importing the app for local route tests must not connect to or seed the database.

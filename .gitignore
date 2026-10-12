@@ -14,3 +14,7 @@ tmp-*.log
 
 # macOS
 .DS_Store
+
+# Local verification output and deployment credentials
+client/test-artifacts/
+deployment-secrets*.json

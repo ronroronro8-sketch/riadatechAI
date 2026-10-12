@@ -1,4 +1,5 @@
 export const cityCoordinates = {
+  Duqm: { lat: 19.6230411, lng: 57.6340004 },
   Muscat: { lat: 23.588, lng: 58.3829 },
   Sohar: { lat: 24.3476, lng: 56.7093 },
   Salalah: { lat: 17.0194, lng: 54.0897 },
@@ -10,6 +11,9 @@ export const cityCoordinates = {
 };
 
 export const businessCategoryOptions = [
+  { value: "Supermarket", ar: "سوبرماركت", en: "Supermarket" },
+  { value: "Logistics Services", ar: "خدمات لوجستية", en: "Logistics Services" },
+  { value: "Car Maintenance", ar: "صيانة سيارات", en: "Car Maintenance" },
   { value: "Coffee Shop", ar: "مقهى", en: "Coffee Shop" },
   { value: "Restaurant", ar: "مطعم", en: "Restaurant" },
   { value: "Bakery", ar: "مخبز", en: "Bakery" },
@@ -34,6 +38,7 @@ export const targetAudienceOptions = [
 ];
 
 export const cityOptions = [
+  { value: "Duqm", ar: "الدقم", en: "Duqm" },
   { value: "Muscat", ar: "مسقط", en: "Muscat" },
   { value: "Sohar", ar: "صحار", en: "Sohar" },
   { value: "Salalah", ar: "صلالة", en: "Salalah" },

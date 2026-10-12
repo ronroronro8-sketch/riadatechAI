@@ -11,6 +11,8 @@ const validEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export function createAuthRouter({ UserModel, connection, allowedOrigins, env = process.env }) {
   const router = Router();
+  // GET /login is a frontend route; only legacy POST endpoints need a session.
+  router.get(["/login", "/logout", "/registerUser"], (req, res, next) => next("router"));
   router.use(["/api/auth", "/login", "/registerUser", "/logout"], (req, res, next) => {
     res.set("Cache-Control", "no-store");
     if (!["GET", "HEAD", "OPTIONS"].includes(req.method)) {

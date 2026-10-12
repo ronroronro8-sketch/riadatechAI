@@ -1851,3 +1851,10 @@
     font-size: 30px;
   }
 }
+
+.rt-duqm-recommendations { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.rt-duqm-recommendations article { min-width:0; overflow-wrap:anywhere; }
+.rt-duqm-search-results { display:flex; flex-wrap:wrap; gap:8px; }
+.rt-local-map { height:470px; width:100%; z-index:0; background:repeating-linear-gradient(0deg,#dae7e8 0 1px,transparent 1px 40px),repeating-linear-gradient(90deg,#dae7e8 0 1px,#f2f7f8 1px 40px); }
+.rt-duqm-pin { background:#0ea5a8; color:#fff; border:2px solid #fff; border-radius:50%; font-weight:bold; text-align:center; line-height:24px; }
+@media(max-width:1000px) { .rt-duqm-recommendations { grid-template-columns:1fr; } }

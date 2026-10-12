@@ -1,3 +1,4 @@
+import { isDuqm } from './duqmAnalysis.js';
 import { normalizeAnalysisInput } from '../utils/mapAnalysis.js';
 import { ConversationError } from './conversationService.js';
 
@@ -12,7 +13,7 @@ const itemFields = ['name', 'area_name', 'address', 'distanceKm', 'monthlyRent',
 const recommendationFields = ['area_name', 'governorate', 'wilayat', 'latitude', 'longitude', 'score',
   'startup_score', 'business_score', 'tourism_score', 'craft_score', 'score_breakdown',
   'metric_counts', 'category_match_used', 'open_data_weights', 'startup_count', 'business_activity_count',
-  'tourism_activity_count', 'craft_activity_count', 'data_source_notes', 'explanation_ar', 'explanation_en'];
+  'tourism_activity_count', 'craft_activity_count', 'data_source_notes', 'explanation_ar', 'explanation_en', 'data_kind', 'data_mode', 'demo_monthly_rent', 'budget_source', 'nearby_services', 'competitor_density', 'score_weights'];
 const rentalFields = ['title', 'city', 'neighborhood', 'address', 'monthlyRent', 'sizeSqm',
   'latitude', 'longitude', 'budgetScore', 'budgetStatus_ar', 'budgetStatus_en', 'data_source', 'warning_ar', 'warning_en'];
 const pick = (source, fields) => Object.fromEntries(fields.filter(k => source?.[k] !== undefined).map(k => [k, source[k]]));
@@ -63,19 +64,19 @@ export function createSmartMapService({ MapAnalysis, loadRecommendations, loadCo
     for (const key of ['estimatedBudget', 'maxMonthlyRent', 'searchRadiusKm']) {
       if (!Number.isFinite(input[key]) || input[key] < 0) throw new ConversationError(400, 'Invalid numeric project input.');
     }
-    const query = { city: input.city, businessType: input.businessCategoryLabel };
+    const query = { city: input.city, businessType: input.businessCategoryLabel, targetAudience: input.targetAudience, maxMonthlyRent: input.maxMonthlyRent, startupBudget: input.estimatedBudget, radiusKm: input.searchRadiusKm, mode: raw.mode === 'demo' ? 'demo' : 'auto', lat: input.location?.lat, lng: input.location?.lng };
     const recommendations = await loadRecommendations(query);
     const primary = recommendations.recommendations?.[0];
     if (!primary) throw new ConversationError(404, 'No location recommendations are available.');
     const [competitors, alternatives, rentals] = await Promise.all([
-      loadCompetitors({ ...query, lat: primary.latitude, lng: primary.longitude, radiusKm: input.searchRadiusKm }),
+      loadCompetitors({ ...query, lat: isDuqm(input.city) ? input.location.lat : primary.latitude, lng: isDuqm(input.city) ? input.location.lng : primary.longitude, radiusKm: input.searchRadiusKm }),
       loadAlternatives(query),
       input.maxMonthlyRent > 0 ? loadRentals({ ...query, maxMonthlyRent: input.maxMonthlyRent, startupBudget: input.estimatedBudget }) : null,
     ]);
     // Every result below comes from the same server loaders used by the current
     // map page. req.body.analysis and any client provenance are deliberately ignored.
     return { ...pick(input, topFields),
-      selectedLocation: { lat: primary.latitude, lng: primary.longitude, label: primary.area_name, city: primary.wilayat },
+      selectedLocation: isDuqm(input.city) ? {...input.location, city: input.city} : { lat: primary.latitude, lng: primary.longitude, label: primary.area_name, city: primary.wilayat },
       locationScore: primary.score,
       locationRecommendation: pick(primary, recommendationFields),
       competitorSummary: { ...pick(competitors, ['count', 'data_quality', 'category_confidence', 'message_ar', 'message_en']),

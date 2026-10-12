@@ -1,6 +1,7 @@
 import rentalSeedData from "../data/rentalSeedData.js";
 
 const cityCenters = {
+  Duqm: { lat: 19.6230411, lng: 57.6340004 },
   Muscat: { lat: 23.588, lng: 58.3829 },
   Sohar: { lat: 24.3476, lng: 56.7093 },
   Salalah: { lat: 17.0194, lng: 54.0897 },

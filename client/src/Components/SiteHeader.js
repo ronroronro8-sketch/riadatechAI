@@ -73,6 +73,7 @@ function SiteHeader({ locale = "ar", setLocale, showCta = true }) {
           <NavLink to="/assistant" className={getNavClass} onClick={handleNavClose}>
             {labels.assistant}
           </NavLink>
+          <NavLink to="/duqm-connect" className={getNavClass} onClick={handleNavClose}>Duqm Connect</NavLink>
           <NavLink to="/data-sources" className={getNavClass} onClick={handleNavClose}>
             {labels.dataSources}
           </NavLink>

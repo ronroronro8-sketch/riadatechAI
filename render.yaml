@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: riadatech-ai
+    runtime: node
+    plan: free
+    buildCommand: npm --prefix client ci --include=dev && npm --prefix client run build && npm --prefix server ci --omit=dev
+    startCommand: npm --prefix server start
+    healthCheckPath: /api/ready
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY_HOPS
+        value: "1"
+      - key: SESSION_COOKIE_SAME_SITE
+        value: lax
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: MONGO_URI
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: REACT_APP_API_BASE_URL
+        value: ""
+      - key: REACT_APP_GOOGLE_MAPS_API_KEY
+        sync: false
+      - key: GENERATE_SOURCEMAP
+        value: "false"

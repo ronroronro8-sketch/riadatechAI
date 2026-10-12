@@ -1,6 +1,5 @@
-﻿import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Sparkles } from "lucide-react";
 
 import { buildApiUrl } from "../api/httpClient";
 import LocationInfoBox, {
@@ -8,7 +7,8 @@ import LocationInfoBox, {
   getDetectedLocationLabelForMap,
 } from "./LocationInfoBox";
 import MapResultsPanel from "./MapResultsPanel";
-import ResultAccordionSection from "./ResultAccordionSection";
+import DuqmResults from "./DuqmResults";
+import LocalMap from "./LocalMap";
 import SiteFooter from "./SiteFooter";
 import "./MapAnalysis.css";
 import {
@@ -46,6 +46,10 @@ function MapAnalysis({ locale = "ar" }) {
     ...cityCoordinates[DEFAULT_CITY],
     label: DEFAULT_CITY,
   });
+  const [duqmData, setDuqmData] = useState(null);
+  const [dataMode, setDataMode] = useState('auto');
+  const [fallbackMap, setFallbackMap] = useState(!GOOGLE_MAPS_API_KEY);
+  const requestVersion = useRef(0);
   const [locationSearch, setLocationSearch] = useState("");
   const [mapReady, setMapReady] = useState(false);
   const [mapStatus, setMapStatus] = useState("");
@@ -74,6 +78,7 @@ function MapAnalysis({ locale = "ar" }) {
   const autocompleteRef = useRef(null);
   const competitorMarkersRef = useRef([]);
   const rentalMarkersRef = useRef([]);
+  const recommendationMarkersRef = useRef([]);
 
   const text = uiText[locale];
   const direction = locale === "ar" ? "rtl" : "ltr";
@@ -230,6 +235,12 @@ function MapAnalysis({ locale = "ar" }) {
 
     clearMarkers(competitorMarkersRef);
     clearMarkers(rentalMarkersRef);
+    clearMarkers(recommendationMarkersRef);
+    (result.locationRecommendations || []).forEach((item, index) => {
+      const marker = new window.google.maps.Marker({map: mapRef.current, position: {lat: item.latitude, lng: item.longitude}, label: {text:String(index + 1),color:"#ffffff"}, icon:{path:window.google.maps.SymbolPath.CIRCLE,scale:13,fillColor:"#0ea5a8",fillOpacity:1,strokeColor:"#ffffff",strokeWeight:2}, title: item.area_name});
+      marker.addListener('click', () => focusRecommendation(item));
+      recommendationMarkersRef.current.push(marker);
+    });
 
     (result.competitorSummary?.items || []).forEach((item) => {
       competitorMarkersRef.current.push(
@@ -278,7 +289,9 @@ function MapAnalysis({ locale = "ar" }) {
   }
 
   async function getJson(url) {
-    const response = await fetch(url);
+    const response = await fetch(url, {signal: AbortSignal.timeout(20000)}).catch(() => {
+      throw new Error(locale === 'ar' ? 'خدمة التحليل غير متاحة الآن. أعد المحاولة بعد تشغيل التطبيق.' : 'The analysis service is unavailable. Start the application and try again.');
+    });
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
@@ -481,6 +494,18 @@ function MapAnalysis({ locale = "ar" }) {
     }
   }
 
+  function focusRecommendation(item) {
+    handleLocationChange({lat:item.latitude,lng:item.longitude}, locale === 'ar' ? item.area_name_ar || item.area_name : item.area_name);
+    mapRef.current?.setZoom(14);
+    mapElementRef.current?.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  function duqmParams() {
+    return new URLSearchParams({city:form.city, businessType:form.businessCategory === 'Other' ? form.customBusinessCategory || form.projectName : form.businessCategory,
+      projectName:form.projectName, targetAudience:form.targetAudience, maxMonthlyRent:String(form.maxMonthlyRent), startupBudget:String(form.estimatedBudget),
+      radiusKm:String(form.searchRadiusKm), lat:String(selectedLocation.lat), lng:String(selectedLocation.lng), areaName:form.areaName, mode:dataMode});
+  }
+
   async function handleAnalyze(event) {
     event.preventDefault();
 
@@ -489,10 +514,25 @@ function MapAnalysis({ locale = "ar" }) {
       return;
     }
 
+    const version = ++requestVersion.current;
     setAnalysisLoading(true);
     setErrorMessage("");
 
     try {
+      if (form.city === 'Duqm') {
+        const result = await getJson(buildApiUrl('/api/city-analysis?' + duqmParams()));
+        if (version !== requestVersion.current) return;
+        if (!Array.isArray(result.recommendations) || result.recommendations.length !== 3 || !Array.isArray(result.records) || !Array.isArray(result.competitors)) throw new Error(locale === 'ar' ? 'استجابة التحليل غير مكتملة. أعد المحاولة أو اختر وضع DEMO.' : 'The analysis response is incomplete. Retry or select DEMO mode.');
+        const nextAnalysis = {duqm: result, rentalSummary: {totalAvailable:0, bestOptions:[]}, locationScore:result.recommendations[0].score, competitorSummary:{count:result.competitor_count, items:result.records.filter(p=>p.is_competitor).map(p=>({...p,lat:p.latitude,lng:p.longitude}))}, locationRecommendations:result.recommendations};
+        setDuqmData(result);
+        setAnalysisResult(nextAnalysis);
+        renderMapMarkers(nextAnalysis);
+        if (authenticatedUser) {
+          const saved = await fetch(buildApiUrl('/api/map-analysis/save'), {method:'POST',credentials:'include',headers:{'Content-Type':'application/json','X-RiadaTech-Request':'1'},body:JSON.stringify({inputs:{...form,mode:dataMode,location:selectedLocation}})});
+          if (!saved.ok) throw new Error(locale==='ar'?'تم التحليل، لكن تعذر الحفظ في الحساب.':'Analysis is ready, but saving to your account failed.');
+        }
+        return;
+      }
       const selectedBusinessType =
         form.businessCategory === "Other" && form.customBusinessCategory.trim()
           ? form.customBusinessCategory.trim()
@@ -562,6 +602,7 @@ function MapAnalysis({ locale = "ar" }) {
         recommendedLocation.area_name
       );
 
+      if (version !== requestVersion.current) return;
       setAnalysisResult(nextAnalysis);
       renderMapMarkers(nextAnalysis);
       if (authenticatedUser) {
@@ -575,9 +616,9 @@ function MapAnalysis({ locale = "ar" }) {
           : "Analysis displayed, but saving it for the assistant failed. Please retry.");
       }
     } catch (error) {
-      setErrorMessage(error.message || text.analysisError);
+      if (version === requestVersion.current) setErrorMessage(error.message || text.analysisError);
     } finally {
-      setAnalysisLoading(false);
+      if (version === requestVersion.current) setAnalysisLoading(false);
     }
   }
 
@@ -601,6 +642,8 @@ function MapAnalysis({ locale = "ar" }) {
     }
 
     let cancelled = false;
+    const timeout = setTimeout(() => { if (!cancelled && !mapRef.current) setFallbackMap(true); }, 12000);
+    window.gm_authFailure = () => { if (!cancelled) setFallbackMap(true); };
 
     loadGoogleMapsScript(GOOGLE_MAPS_API_KEY)
       .then(() => {
@@ -662,30 +705,34 @@ function MapAnalysis({ locale = "ar" }) {
         }
 
         handleLocationChange(initialCenter, getCityLabel(activeCity));
+        clearTimeout(timeout);
         setMapReady(true);
         setMapStatus("");
       })
       .catch((error) => {
+        setFallbackMap(true);
         setMapStatus(error.message || text.mapKeyMissing);
       });
 
     return () => {
       cancelled = true;
+      clearTimeout(timeout);
+      delete window.gm_authFailure;
+      clearMarkers(competitorMarkersRef);
+      clearMarkers(rentalMarkersRef);
+      clearMarkers(recommendationMarkersRef);
     };
   }, []);
 
   useEffect(() => {
-    if (!mapReady || !mapRef.current) {
-      return;
-    }
-
     const activeCity = form.city || DEFAULT_CITY;
     const cityCenter = cityCoordinates[activeCity] || cityCoordinates[DEFAULT_CITY];
-    mapRef.current.panTo(cityCenter);
-    mapRef.current.setZoom(12);
+    mapRef.current?.panTo(cityCenter);
+    mapRef.current?.setZoom(12);
     handleLocationChange(cityCenter, getCityLabel(activeCity));
     clearMarkers(competitorMarkersRef);
     clearMarkers(rentalMarkersRef);
+    clearMarkers(recommendationMarkersRef);
     setAnalysisResult(null);
   }, [form.city, mapReady]);
 
@@ -713,14 +760,29 @@ function MapAnalysis({ locale = "ar" }) {
     handleLocationChange(queuedDetectedLocation.coordinates, queuedDetectedLocation.label);
     setQueuedDetectedLocation(null);
   }, [form.city, mapReady, queuedDetectedLocation]);
+  useEffect(() => {
+    requestVersion.current += 1;
+    setAnalysisLoading(false);
+    setAnalysisResult(null);
+    clearMarkers(competitorMarkersRef); clearMarkers(rentalMarkersRef); clearMarkers(recommendationMarkersRef);
+    if (form.city !== 'Duqm') { setDuqmData(null); return; }
+    const controller = new AbortController();
+    const params = duqmParams();
+    // Use the city center for the preview; the submitted request uses the selected point.
+    params.set('lat', String(cityCoordinates.Duqm.lat)); params.set('lng', String(cityCoordinates.Duqm.lng));
+    setDuqmData(null);
+    fetch(buildApiUrl('/api/city-analysis?' + params), {signal:controller.signal})
+      .then(async response => { const body = await response.json(); if (!response.ok) throw new Error(body.error || text.analysisError); return body; })
+      .then(data => { setDuqmData(data); setErrorMessage(''); })
+      .catch(error => { if(error.name !== 'AbortError') setErrorMessage(error instanceof TypeError ? (locale==='ar'?'خدمة التحليل غير متاحة الآن. أعد المحاولة بعد تشغيل التطبيق.':'The analysis service is unavailable. Start the application and try again.') : error.message || text.analysisError); });
+    return () => controller.abort();
+  }, [form.city, form.businessCategory, form.customBusinessCategory, form.targetAudience, form.maxMonthlyRent, form.estimatedBudget, form.searchRadiusKm, dataMode]);
+
+  useEffect(() => {
+    if (duqmData && !analysisResult && mapReady) renderMapMarkers({competitorSummary:{items:duqmData.records.filter(p=>p.is_competitor).map(p=>({...p,lat:p.latitude,lng:p.longitude}))}});
+  }, [duqmData, analysisResult, mapReady]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  const competitionChipClass =
-    analysisResult?.competitorSummary.level === "Low"
-      ? "high"
-      : analysisResult?.competitorSummary.level === "Medium"
-      ? "medium"
-      : "low";
 
   return (
     <div className="rt-map-page" dir={direction}>
@@ -735,7 +797,7 @@ function MapAnalysis({ locale = "ar" }) {
                   <br />
                   <span>{text.titleAccent}</span>
                 </h1>
-                <p className="rt-map-description">{text.description}</p>
+                <p className="rt-map-description">{form.city === "Duqm" ? (locale === "ar" ? "قارن مواقع في الدقم باستخدام سجلات الخرائط المحفوظة ومؤشرات ملاءمة تقديرية، مع أمثلة تجريبية واضحة عند نقص البيانات." : "Compare Duqm locations using cached map records and estimated suitability, with clearly labeled examples where data is missing.") : text.description}</p>
                 <div className="rt-map-hero-actions">
                   <button
                     type="button"
@@ -763,7 +825,7 @@ function MapAnalysis({ locale = "ar" }) {
               <div className="rt-map-hero-card">
                 <span className="rt-map-badge">{text.heroCardBadge}</span>
                 <h3>{text.heroCardTitle}</h3>
-                <p>{text.heroCardText}</p>
+                <p>{form.city === "Duqm" ? (locale === "ar" ? "المنافسون والخدمات من الخرائط عند توفرها. لا توجد أرقام موثقة للسكان أو الإيجارات ضمن هذا التحليل." : "Competitors and services use available map records. This analysis has no verified population or rental figures.") : text.heroCardText}</p>
                 <div className="rt-map-stats-grid">
                   <div className="rt-map-stat-card">
                     <strong>{analysisResult?.competitorSummary.count ?? 0}</strong>
@@ -790,9 +852,10 @@ function MapAnalysis({ locale = "ar" }) {
             <form className="rt-map-panel" onSubmit={handleAnalyze}>
               <h2 className="rt-map-panel-title">{text.formTitle}</h2>
               <p className="rt-map-panel-description">{text.formDescription}</p>
+              {form.city === 'Duqm' && <div className="rt-map-field"><label htmlFor="duqm-mode">{locale==='ar'?'مصدر البيانات':'Data mode'}</label><select id="duqm-mode" value={dataMode} onChange={e=>setDataMode(e.target.value)}><option value="auto">{locale==='ar'?'بيانات محفوظة + تجريبي عند نقص البيانات':'Cached data + labeled demo fallback'}</option><option value="demo">DEMO / {locale==='ar'?'بيانات محاكاة':'Simulated data'}</option></select></div>}
               <div className="rt-map-form-grid">
                 <div className="rt-map-field rt-map-field-full">
-                  <label htmlFor="projectName">{text.projectName}</label>
+                  <label htmlFor="projectName">{form.city === "Duqm" ? (locale === "ar" ? "فكرة المشروع" : "Business idea") : text.projectName}</label>
                   <input id="projectName" name="projectName" value={form.projectName} onChange={handleFieldChange} />
                 </div>
                 <div className="rt-map-field">
@@ -890,14 +953,13 @@ function MapAnalysis({ locale = "ar" }) {
                   {selectedLocation?.label || getCityLabel(form.city)}
                 </div>
               </div>
+              {form.city === 'Duqm' && duqmData && <div className="rt-map-status-banner">{locale==='ar'?duqmData.notice_ar:duqmData.notice_en}<br />{locale==='ar'?'سجلات المنافسين في الدقم':'Competitor records in Duqm'}: {duqmData.records.filter(p=>p.is_competitor).length}</div>}
+              {form.city === 'Duqm' && <div className="rt-duqm-search-results">{duqmData?.records.filter(p=>locationSearch.length > 1 && p.name.toLowerCase().includes(locationSearch.toLowerCase())).slice(0,6).map(p=><button type="button" className="rt-map-button" key={p.id} onClick={()=>handleLocationChange({lat:p.latitude,lng:p.longitude},p.name)}>{p.name} · {p.data_kind}</button>)}</div>}
               {mapStatus ? <div className="rt-map-map-hint">{mapStatus}</div> : null}
               <div className="rt-map-map-hint">{text.mapHint}</div>
               <div className="rt-map-canvas">
-                {GOOGLE_MAPS_API_KEY ? (
-                  <div ref={mapElementRef} style={{ width: "100%", minHeight: "470px" }} />
-                ) : (
-                  <div className="rt-map-canvas-empty">{text.mapKeyMissing}</div>
-                )}
+                <div ref={mapElementRef} style={{ width: '100%', minHeight: '470px', display:fallbackMap?'none':'block' }} />
+                {fallbackMap && <LocalMap location={selectedLocation} recommendations={analysisResult?.locationRecommendations || []} records={form.city==='Duqm' ? duqmData?.records || [] : (analysisResult?.competitorSummary?.items || []).map(p=>({...p,latitude:p.lat,longitude:p.lng,data_kind:'REAL',is_competitor:true}))} boundary={form.city==='Duqm'?duqmData?.boundary:undefined} onSelect={handleLocationChange} locale={locale} />}
               </div>
               <div className="rt-map-legend">
                 <div className="rt-map-legend-item"><span className="rt-map-legend-swatch primary" />{text.markerSelected}</div>
@@ -919,9 +981,9 @@ function MapAnalysis({ locale = "ar" }) {
           <section className="rt-map-results">
             <div className="rt-map-results-header">
               <h2>{text.resultsTitle}</h2>
-              <p>{text.resultsDescription}</p>
+              <p>{form.city === "Duqm" ? (locale === "ar" ? "تقييم تقديري مبني على سجلات الخرائط المتاحة وبيانات تجريبية معلّمة عند الحاجة." : "Estimated suitability from available map records and labeled demo data where needed.") : text.resultsDescription}</p>
             </div>
-            <MapResultsPanel
+            {analysisResult?.duqm ? <DuqmResults result={analysisResult.duqm} locale={locale} onFocus={focusRecommendation} /> : <MapResultsPanel
               analysisResult={analysisResult}
               locale={locale}
               text={text}
@@ -931,7 +993,7 @@ function MapAnalysis({ locale = "ar" }) {
               formatCurrency={formatCurrency}
               translateLevel={translateLevel}
               getScoreTone={getScoreTone}
-            />
+            />}
           </section>
         </div>
       </main>

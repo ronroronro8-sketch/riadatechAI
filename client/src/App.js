@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { restoreSession } from "./store/authSlice";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
+import DuqmConnect from "./Components/DuqmConnect";
 import DataSources from "./Components/DataSources";
 import Home from "./Components/Home";
 import IntroSplash from "./Components/IntroSplash";
@@ -30,6 +31,7 @@ function AppShell() {
         <Route path="/login" element={<Login locale={locale} />} />
         <Route path="/map-analysis" element={<MapAnalysis locale={locale} />} />
         <Route path="/assistant" element={<SmartAssistant locale={locale} />} />
+        <Route path="/duqm-connect" element={<DuqmConnect />} />
         <Route path="/data-sources" element={<DataSources locale={locale} />} />
         <Route path="/profile" element={<Profile locale={locale} />} />
         <Route path="/register" element={<Register locale={locale} />} />
